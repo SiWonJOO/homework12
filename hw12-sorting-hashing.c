@@ -330,57 +330,57 @@ int hashing(int *a, int **ht) //해싱 함수 구현 , 값을 바꾸기위해 �
 		hashtable = *ht;	/* hash table이 NULL이 아닌경우, table 재활용, reset to -1 */
 	}
 
-	for(int i = 0; i < MAX_HASH_TABLE_SIZE; i++)
-		hashtable[i] = -1;
+	for(int i = 0; i < MAX_HASH_TABLE_SIZE; i++) // 해시 테이블 사이즈 만큼 반복
+		hashtable[i] = -1; // 해쉬테이블 값 -1 로 초기화
 
 	/*
 	for(int i = 0; i < MAX_HASH_TABLE_SIZE; i++)
 		printf("hashtable[%d] = %d\n", i, hashtable[i]);
 	*/
 
-	int key = -1;
-	int hashcode = -1;
+	int key = -1;  // key hashcode index -1로 초기화해줌
+	int hashcode = -1; 
 	int index = -1;
-	for (int i = 0; i < MAX_ARRAY_SIZE; i++)
+	for (int i = 0; i < MAX_ARRAY_SIZE; i++) // 배열 사이즈 만큼 반복한다.
 	{
-		key = a[i];
-		hashcode = hashCode(key);
+		key = a[i]; // a[i] 번째 값을 key에 저장
+		hashcode = hashCode(key); // 해시코드에 해싱값 저장
 		/*
 		printf("key = %d, hashcode = %d, hashtable[%d]=%d\n", key, hashcode, hashcode, hashtable[hashcode]);
 		*/
-		if (hashtable[hashcode] == -1)
+		if (hashtable[hashcode] == -1) // hashtable[hashcode] 값이 -1 즉 바로 일치한다면 
 		{
-			hashtable[hashcode] = key;
+			hashtable[hashcode] = key; //해시 테이블에 키 값을 넣어준다
 		} else 	{
 
 			index = hashcode;
 
-			while(hashtable[index] != -1)
+			while(hashtable[index] != -1) // 키값 찾을때 까지 반복
 			{
-				index = (++index) % MAX_HASH_TABLE_SIZE;
+				index = (++index) % MAX_HASH_TABLE_SIZE; // 인덱스를 하나씩 증가하면서 비교
 				/*
 				printf("index = %d\n", index);
 				*/
 			}
-			hashtable[index] = key;
+			hashtable[index] = key; //해시 테이블에 키 값을 넣어준다
 		}
 	}
 
 	return 0;
 }
 
-int search(int *ht, int key)
+int search(int *ht, int key) // 입력받은 키 값을 찾는 함수 구현
 {
-	int index = hashCode(key);
+	int index = hashCode(key); // 입력받은 키 값을 index에 넣어준다.
 
-	if(ht[index] == key)
+	if(ht[index] == key) 
 		return index;
 
-	while(ht[++index] != key)
+	while(ht[++index] != key) // 찾지못했으면 index 값 증가시켜주면서 탐색
 	{
-		index = index % MAX_HASH_TABLE_SIZE;
+		index = index % MAX_HASH_TABLE_SIZE; // 나머지값 연산
 	}
-	return index;
+	return index; 
 }
 
 
