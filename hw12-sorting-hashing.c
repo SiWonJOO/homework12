@@ -258,9 +258,9 @@ int shellSort(int *a) // 셀 정렬 함수 구현 - 삽입정렬을 보완하여
 
 	for (h = MAX_ARRAY_SIZE/2; h > 0; h /= 2) // 단계가 수행될때마다 h의 값을 1/2 감소시킨다.
 	{
-		for (i = 0; i < h; i++) // 반 쪼갠 부분에서 처음부터 중간까지 반복
+		for (i = 0; i < h; i++) //  처음부터 h까지 반복
 		{
-			for(j = i + h; j < MAX_ARRAY_SIZE; j += h) // 반쪼갠 부분에서부터 부분리스트 갯수 만큼 반복			{
+			for(j = i + h; j < MAX_ARRAY_SIZE; j += h) // j 에서 MAXSIZE까지 j+h 씩 증가하면 반복
 				{v = a[j]; // j번째 값을 v에 저장하고
 				k = j; // 순서를 k에 저장한다.
 				while (k > h-1 && a[k-h] > v) // 삽입정렬 구현
@@ -275,22 +275,22 @@ int shellSort(int *a) // 셀 정렬 함수 구현 - 삽입정렬을 보완하여
 	
 	
 	printf("----------------------------------------------------------------\n");
-	printArray(a);
+	printArray(a); // 배열을 출력한다.
 
 	return 0;
 	
 }
 
-int quickSort(int *a, int n)
+int quickSort(int *a, int n) // 퀵 정렬 구현 함수 - 기준값을 중심으로 왼족 오른쪽을 부분집합으로 분할하여 정렬
 {
 	int v, t;
 	int i, j;
 
 	if (n > 1)
 	{
-		v = a[n-1];
-		i = -1;
-		j = n - 1;
+		v = a[n-1]; //초기 상태 v는 기준값이 된다.
+		i = -1; // 반으로 나눴을떄 왼쪽
+		j = n - 1; // 반으로 나눴을때 오른쪽
 
 		while(1)
 		{
@@ -298,33 +298,33 @@ int quickSort(int *a, int n)
 			while(a[--j] > v);
 
 			if (i >= j) break;
-			t = a[i];
+			t = a[i]; // 만약 i<j 라면 오른쪽과 왼쪽값을 스왑해준다.
 			a[i] = a[j];
 			a[j] = t;
 		}
-		t = a[i];
+		t = a[i]; // a[n-1] 위치로 스왑해서 다시 중심값을 정해주고 
 		a[i] = a[n-1];
 		a[n-1] = t;
 
-		quickSort(a, i);
-		quickSort(a+i+1, n-i-1);
+		quickSort(a, i); //다시 그 위치를 중심으로 왼쪽
+		quickSort(a+i+1, n-i-1); // 오른쪽을 나누어서 정렬한다.
 	}
 
 
 	return 0;
 }
 
-int hashCode(int key) {
-   return key % MAX_HASH_TABLE_SIZE;
+int hashCode(int key) { // 해시 알고리즘에 의해 생성된 정수 값인 해시 코드 함수 구현
+   return key % MAX_HASH_TABLE_SIZE; // 입력받은 key를  max size로 나머지 값 계산한 것을 return 
 }
 
-int hashing(int *a, int **ht)
+int hashing(int *a, int **ht) //해싱 함수 구현 , 값을 바꾸기위해 더블포인터로 매기변수를 받는다.
 {
-	int *hashtable = NULL;
+	int *hashtable = NULL; // 정수형 포인터 해시테이블 선언후 NULL 값으로 초기화
 
 	/* hash table이 NULL인 경우 메모리 할당 */
 	if(*ht == NULL) {
-		hashtable = (int*)malloc(sizeof(int) * MAX_ARRAY_SIZE);
+		hashtable = (int*)malloc(sizeof(int) * MAX_ARRAY_SIZE); // 해시테이블에 메모리를 할당
 		*ht = hashtable;  /* 할당된 메모리의 주소를 복사 --> main에서 배열을 control 할수 있도록 함*/
 	} else {
 		hashtable = *ht;	/* hash table이 NULL이 아닌경우, table 재활용, reset to -1 */
